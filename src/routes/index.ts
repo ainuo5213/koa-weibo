@@ -5,7 +5,27 @@ let router = new Router();
 
 router.get('/', async (ctx: Context, next: Function) => {
   await ctx.render('index', {
-    title: 'Hello Koa 2!'
+    title: 'Hello Koa 2!',
+    message: '你好',
+    isMe: true,
+    blogList: [
+      {
+        id: 1,
+        title: 'aaa'
+      },
+      {
+        id: 2,
+        title: 'bbb'
+      },
+      {
+        id: 3,
+        title: 'ccc'
+      },
+      {
+        id: 4,
+        title: 'ddd'
+      },
+    ]
   })
 });
 

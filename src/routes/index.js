@@ -42,7 +42,27 @@ router.get('/', function (ctx, next) { return __awaiter(_this, void 0, void 0, f
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, ctx.render('index', {
-                    title: 'Hello Koa 2!'
+                    title: 'Hello Koa 2!',
+                    message: '你好',
+                    isMe: true,
+                    blogList: [
+                        {
+                            id: 1,
+                            title: 'aaa'
+                        },
+                        {
+                            id: 2,
+                            title: 'bbb'
+                        },
+                        {
+                            id: 3,
+                            title: 'ccc'
+                        },
+                        {
+                            id: 4,
+                            title: 'ddd'
+                        },
+                    ]
                 })];
             case 1:
                 _a.sent();

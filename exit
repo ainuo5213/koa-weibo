@@ -1,0 +1,121 @@
+warning: LF will be replaced by CRLF in src/routes/index.ts.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in src/views/index.ejs.
+The file will have its original line endings in your working directory
+[1mdiff --git a/src/routes/index.js b/src/routes/index.js[m
+[1mindex 2a1cd08..61710b6 100644[m
+[1m--- a/src/routes/index.js[m
+[1m+++ b/src/routes/index.js[m
+[36m@@ -42,7 +42,27 @@[m [mrouter.get('/', function (ctx, next) { return __awaiter(_this, void 0, void 0, f[m
+     return __generator(this, function (_a) {[m
+         switch (_a.label) {[m
+             case 0: return [4 /*yield*/, ctx.render('index', {[m
+[31m-                    title: 'Hello Koa 2!'[m
+[32m+[m[32m                    title: 'Hello Koa 2!',[m
+[32m+[m[32m                    message: '你好',[m
+[32m+[m[32m                    isMe: true,[m
+[32m+[m[32m                    blogList: [[m
+[32m+[m[32m                        {[m
+[32m+[m[32m                            id: 1,[m
+[32m+[m[32m                            title: 'aaa'[m
+[32m+[m[32m                        },[m
+[32m+[m[32m                        {[m
+[32m+[m[32m                            id: 2,[m
+[32m+[m[32m                            title: 'bbb'[m
+[32m+[m[32m                        },[m
+[32m+[m[32m                        {[m
+[32m+[m[32m                            id: 3,[m
+[32m+[m[32m                            title: 'ccc'[m
+[32m+[m[32m                        },[m
+[32m+[m[32m                        {[m
+[32m+[m[32m                            id: 4,[m
+[32m+[m[32m                            title: 'ddd'[m
+[32m+[m[32m                        },[m
+[32m+[m[32m                    ][m
+                 })];[m
+             case 1:[m
+                 _a.sent();[m
+[1mdiff --git a/src/routes/index.ts b/src/routes/index.ts[m
+[1mindex 8ac0c76..f603102 100644[m
+[1m--- a/src/routes/index.ts[m
+[1m+++ b/src/routes/index.ts[m
+[36m@@ -5,7 +5,27 @@[m [mlet router = new Router();[m
+ [m
+ router.get('/', async (ctx: Context, next: Function) => {[m
+   await ctx.render('index', {[m
+[31m-    title: 'Hello Koa 2!'[m
+[32m+[m[32m    title: 'Hello Koa 2!',[m
+[32m+[m[32m    message: '你好',[m
+[32m+[m[32m    isMe: true,[m
+[32m+[m[32m    blogList: [[m
+[32m+[m[32m      {[m
+[32m+[m[32m        id: 1,[m
+[32m+[m[32m        title: 'aaa'[m
+[32m+[m[32m      },[m
+[32m+[m[32m      {[m
+[32m+[m[32m        id: 2,[m
+[32m+[m[32m        title: 'bbb'[m
+[32m+[m[32m      },[m
+[32m+[m[32m      {[m
+[32m+[m[32m        id: 3,[m
+[32m+[m[32m        title: 'ccc'[m
+[32m+[m[32m      },[m
+[32m+[m[32m      {[m
+[32m+[m[32m        id: 4,[m
+[32m+[m[32m        title: 'ddd'[m
+[32m+[m[32m      },[m
+[32m+[m[32m    ][m
+   })[m
+ });[m
+ [m
+[1mdiff --git a/src/views/index.ejs b/src/views/index.ejs[m
+[1mindex cc50d13..1046e0e 100644[m
+[1m--- a/src/views/index.ejs[m
+[1m+++ b/src/views/index.ejs[m
+[36m@@ -1,11 +1,14 @@[m
+ <!DOCTYPE html>[m
+ <html>[m
+[31m-  <head>[m
+[32m+[m[32m<head>[m
+     <title><%= title %></title>[m
+[31m-    <link rel='stylesheet' href='/stylesheets/style.css' />[m
+[31m-  </head>[m
+[31m-  <body>[m
+[31m-    <h1><%= title %></h1>[m
+[31m-    <p>EJS Welcome to <%= title %></p>[m
+[31m-  </body>[m
+[32m+[m[32m    <link rel='stylesheet' href='/stylesheets/style.css'/>[m
+[32m+[m[32m</head>[m
+[32m+[m[32m<body>[m
+[32m+[m[32m<h1><%= title %></h1>[m
+[32m+[m[32m<p>EJS Welcome to <%= title %></p>[m
+[32m+[m[32m<p><%= message %></p>[m
+[32m+[m[32m<%- include('widgets/profile', {isMe})%>[m
+[32m+[m[32m<%- include('widgets/blog-list', {blogList})%>[m
+[32m+[m[32m</body>[m
+ </html>[m
+[1mdiff --git a/src/views/widgets/blog-list.ejs b/src/views/widgets/blog-list.ejs[m
+[1mindex e69de29..44b1ff0 100644[m
+[1m--- a/src/views/widgets/blog-list.ejs[m
+[1m+++ b/src/views/widgets/blog-list.ejs[m
+[36m@@ -0,0 +1,8 @@[m
+[32m+[m[32m<ul>[m
+[32m+[m[32m    <% blogList.forEach(blog => {  %>[m
+[32m+[m[32m        <li data-id="<%= blog.id%>"><%= blog.title%></li>[m
+[32m+[m[32m    <% })%>[m
+[32m+[m[32m</ul>[m
+[32m+[m[32m<script>[m
+[32m+[m[32m    console.log('sad')[m
+[32m+[m[32m</script>[m
+[1mdiff --git a/src/views/widgets/profile.ejs b/src/views/widgets/profile.ejs[m
+[1mindex e69de29..deb550b 100644[m
+[1m--- a/src/views/widgets/profile.ejs[m
+[1m+++ b/src/views/widgets/profile.ejs[m
+[36m@@ -0,0 +1,7 @@[m
+[32m+[m[32m<div>[m
+[32m+[m[32m    <% if (isMe) { %>[m
+[32m+[m[32m        <p>这是我的信息</p>[m
+[32m+[m[32m    <% } else { %>[m
+[32m+[m[32m        <p>这是别人的信息</p>[m
+[32m+[m[32m    <% }%>[m
+[32m+[m[32m</div>[m
