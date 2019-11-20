@@ -1,4 +1,11 @@
-/**
- * Created by 16609 on 2019-11-19
- *
- */
+const { User } = require('./module');
+!(async () => {
+  const updateRes = await User.update({
+    nickname: '张三1',
+  }, {
+    where: {
+      username: 'zhangsan'
+    }
+  });
+  console.log(updateRes[0] > 0)
+})();
