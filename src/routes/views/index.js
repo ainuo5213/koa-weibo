@@ -1,3 +1,7 @@
+/**
+ * @description 注册路由
+ * @author ainuo5213
+ */
 const fs = require('fs')
 const path = require('path')
 

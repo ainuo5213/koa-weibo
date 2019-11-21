@@ -1,6 +1,6 @@
 const Router = require('koa-router')
 const router = new Router()
-
+const {createToken, decodeToken} = require('../../utils/jwt')
 router.get('/', async (ctx, next) => {
   await ctx.render('index', {
     title: 'Hello Koa 2!',
@@ -36,5 +36,24 @@ router.get('/json', async (ctx, next) => {
     title: 'koa2 json'
   }
 })
-
+router.get('/login', async (ctx, next) => {
+  let token = createToken({
+    username: '包飞',
+    nickname: '大剑'
+  })
+  ctx.body = {
+    token,
+    code: 0
+  }
+  ctx.set('Content-Type', 'application/json')
+})
+router.post('/auth', async (ctx, next) => {
+  let token = ctx.header.authorization.split(' ')[1];
+  let userInfo = decodeToken(token)
+  ctx.body = {
+    data: userInfo,
+    code: 0
+  }
+  ctx.set('Content-Type', 'application/json')
+})
 module.exports = router

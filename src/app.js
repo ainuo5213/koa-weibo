@@ -4,6 +4,7 @@ const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
 const body = require('koa-body')
+// const jwt = require('koa-jwt')
 const logger = require('koa-logger')
 const session = require('koa-session')
 const regApiRouter = require('./routes/api')
@@ -12,6 +13,7 @@ const errorViewRouter = require('./routes/views/error')
 const RedisStore = require('./cache/redis')
 const client = require('./cache/_redis')
 const {isProduction} = require('./utils/env')
+// const {SECRETE} = require('./config/constants')
 // error handler
 let errorConf = {}
 if (isProduction) {
@@ -20,6 +22,12 @@ if (isProduction) {
   }
 }
 onerror(app, errorConf)
+
+// app.use(jwt({
+//   secret: SECRETE
+// }).unless({
+//   path: [/^\/login\/users/] // 自定义哪些路径忽略jwt验证
+// }))
 
 // session配置，用于加密
 app.keys = ['XTHsyg201314.#$']
