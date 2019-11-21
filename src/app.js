@@ -3,17 +3,17 @@ const app = new Koa()
 const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
-const body= require('koa-body')
+const body = require('koa-body')
 const logger = require('koa-logger')
 const session = require('koa-session')
-const index = require('./routes')
-const user = require('./routes/users')
+const regApiRouter = require('./routes/api')
+const regViewRouter = require('./routes/views')
 const errorViewRouter = require('./routes/views/error')
 const RedisStore = require('./cache/redis')
-const client = require('./cache/_redis');
+const client = require('./cache/_redis')
 const {isProduction} = require('./utils/env')
 // error handler
-let errorConf = {};
+let errorConf = {}
 if (isProduction) {
   errorConf = {
     redirect: '/error'
@@ -44,8 +44,8 @@ app.use(views(__dirname + '/views', {
 }))
 
 // routes
-app.use(index.routes()).use(index.allowedMethods())
-app.use(user.routes()).use(user.allowedMethods())
+regApiRouter(app)
+regViewRouter(app)
 app.use(errorViewRouter.routes()).use(errorViewRouter.allowedMethods()) // 这个必需在最后面，因为有个404的路由
 // error-handling
 app.on('error', (err, ctx) => {

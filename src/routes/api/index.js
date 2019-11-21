@@ -4,7 +4,7 @@ const path = require('path')
 const regRouter = server => {
   let data = fs.readdirSync(path.resolve(__dirname, './'))
   for (let file of data) {
-    if (file === 'index.js' || file === 'error.js') {
+    if (file === 'index.js') {
       continue
     }
     const router = require('./' + file)
