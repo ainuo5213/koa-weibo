@@ -9,7 +9,8 @@
       "es2015",
       "es2015.iterable",
       "esnext"
-    ]
+    ],
+    "experimentalDecorators": true
   },
   "exclude": [
     "node_modules"
