@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
-</head>
-<body>
-<h1><%= title %></h1>
-<p>EJS Welcome to <%= title %></p>
-<p><%= message %></p>
-<%- include('widgets/profile', {isMe})%>
-<%- include('widgets/blog-list', {blogList})%>
-</body>
-</html>
+<%- include('layout/header', { title: '微博 - 首页', isNav: true, list: true, isInputBlog: true })%>
+
+<div>
+    this is index
+</div>
+
+<%- include('layout/footer')%>

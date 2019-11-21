@@ -3,15 +3,23 @@ const app = new Koa()
 const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
-const bodyparser = require('koa-bodyparser')
+const body= require('koa-body')
 const logger = require('koa-logger')
 const session = require('koa-session')
-const index = require('./routes/index')
-const users = require('./routes/users')
+const index = require('./routes')
+const user = require('./routes/users')
+const errorViewRouter = require('./routes/views/error')
 const RedisStore = require('./cache/redis')
-const client = require('./cache/_redis')
+const client = require('./cache/_redis');
+const {isProduction} = require('./utils/env')
 // error handler
-onerror(app)
+let errorConf = {};
+if (isProduction) {
+  errorConf = {
+    redirect: '/error'
+  }
+}
+onerror(app, errorConf)
 
 // session配置，用于加密
 app.keys = ['XTHsyg201314.#$']
@@ -24,7 +32,7 @@ const SESSION_CONFIG = {
 }
 app.use(session(SESSION_CONFIG, app))
 // middlewares
-app.use(bodyparser({
+app.use(body({
   enableTypes: ['json', 'form', 'text']
 }))
 app.use(json())
@@ -37,8 +45,8 @@ app.use(views(__dirname + '/views', {
 
 // routes
 app.use(index.routes()).use(index.allowedMethods())
-app.use(users.routes()).use(users.allowedMethods())
-
+app.use(user.routes()).use(user.allowedMethods())
+app.use(errorViewRouter.routes()).use(errorViewRouter.allowedMethods()) // 这个必需在最后面，因为有个404的路由
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
