@@ -1,10 +1,20 @@
-"use strict";
 /**
  * @description 连接redis数据库
  * @author ainuo5213
- * */
-Object.defineProperty(exports, "__esModule", { value: true });
-var db_1 = require("../config/db");
-var Redis = require('ioredis');
-var redis = new Redis(db_1.REDIS_CONFIG);
-exports.default = redis;
+ */
+
+const {REDIS_CONFIG} = require('../config/db')
+const dev = require('../utils/env')
+const Redis = require('ioredis')
+const { host, port } = REDIS_CONFIG
+const conf = {
+  host,
+  port
+}
+if (dev.isProduction) {
+  // TODO 生产环境的配置
+}
+let redis = new Redis(REDIS_CONFIG)
+module.exports = {
+  redis
+}
