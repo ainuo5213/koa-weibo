@@ -18,6 +18,9 @@ router.post('/register', genValidator(userValidator), async ctx => {
 router.post('/isExist', async ctx => {
   const {userName} = ctx.request.body
   ctx.body = await user.isExist(userName)
-  // ctx.set('Content-Type', 'application/json')
+})
+router.post('/login', async ctx => {
+  const { userName, password } = ctx.request.body
+  ctx.body = await user.login(ctx, userName, password)
 })
 module.exports = router

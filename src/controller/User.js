@@ -8,7 +8,8 @@ const {ErrorModel, SuccessModel} = require('../response/resultModel')
 const {
   registerUserNameNotExistInfo,
   registerUserNameExistInfo,
-  registerFailInfo
+  registerFailInfo,
+  loginFailInfo
 } = require('../response/errorInfo')
 
 class User {
@@ -45,6 +46,26 @@ class User {
       } catch (e) {
         return new ErrorModel(registerFailInfo)
       }
+    }
+  }
+  /**
+   * 登陆
+   * @param ctx 上下文，用于设置session
+   * @param userName
+   * @param password
+   * @return {Promise<void>}
+   */
+  login = async (ctx, userName, password) => {
+    // 获取用户信息
+    let userInfo = await getUserInfo(userName, doCrypto(password))
+    // 有该用户
+    if (userInfo) {
+      if (!ctx.session.userInfo) {
+        ctx.session.userInfo = userInfo
+      }
+      return new SuccessModel()
+    } else {
+      return new ErrorModel(loginFailInfo)
     }
   }
 }
