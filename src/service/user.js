@@ -6,6 +6,13 @@
 
 const User = require('../model/User')
 const {formatUser} = require('./_format')
+
+/**
+ * 获取用户信息
+ * @param userName
+ * @param password
+ * @return {Promise<*>}
+ */
 async function getUserInfo(userName, password) {
   // 查询条件
   const whereOption = {
@@ -30,6 +37,25 @@ async function getUserInfo(userName, password) {
   return result
 }
 
+/**
+ * 创建用户
+ * @param userName 用户
+ * @param password 密码
+ * @param gender 默认3
+ * @param nickName 可选
+ * @return {Promise<void>}
+ */
+async function createUser({userName, password, gender = 3, nickName}) {
+  const res = await User.create({
+    userName,
+    password,
+    gender,
+    nickName: nickName ? nickName : userName
+  })
+  return res.dataValues
+}
+
 module.exports = {
-  getUserInfo
+  getUserInfo,
+  createUser
 }

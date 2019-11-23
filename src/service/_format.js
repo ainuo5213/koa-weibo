@@ -24,7 +24,7 @@ function formatUser(list) {
   if (!list) {
     return
   }
-  if (!Array.isArray(list)) {
+  if (Array.isArray(list)) {
     return list.map(_formatUserPic)
   }
   return _formatUserPic(list)

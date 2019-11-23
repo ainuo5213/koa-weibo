@@ -13,7 +13,7 @@ const errorViewRouter = require('./routes/views/error')
 const RedisStore = require('./cache/redis')
 const client = require('./cache/_redis')
 const {isProduction} = require('./utils/env')
-// const {SECRETE} = require('./config/constants')
+const {SESSION_KEY} = require('./config/constants')
 // error handler
 let errorConf = {}
 if (isProduction) {
@@ -30,7 +30,7 @@ onerror(app, errorConf)
 // }))
 
 // session配置，用于加密
-app.keys = ['XTHsyg201314.#$']
+app.keys = [SESSION_KEY]
 const SESSION_CONFIG = {
   key: 'weibo.sid',// session的名字
   store: new RedisStore(client.redis), // sessionStore
