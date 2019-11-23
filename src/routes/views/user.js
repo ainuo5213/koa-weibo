@@ -5,12 +5,28 @@
 const Router = require('koa-router')
 const router = new Router()
 
+/**
+ * 获取登陆信息
+ * @param ctx
+ */
+function getLoginInfo(ctx) {
+  const data = {
+    isLogin: false
+  }
+  let userInfo = ctx.session.userInfo
+  if (userInfo) {
+    data.userName = userInfo.userName
+    data.isLogin = true
+  }
+  return data
+}
+
 router.get('/login', async ctx => {
-  await ctx.render('login', {})
+  await ctx.render('login', getLoginInfo(ctx))
 })
 
 router.get('/register', async ctx => {
-  await ctx.render('register', {})
+  await ctx.render('register', getLoginInfo(ctx))
 })
 
 module.exports = router
