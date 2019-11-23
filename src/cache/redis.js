@@ -9,7 +9,7 @@ module.exports = class RedisStore {
   }
 
   // 根据sessionId获取redis中存储的session数据
-  get = async (key) => {
+  async get(key) {
     // 获取data，此时为序列化的字符串
     const data = await this.client.get(key)
     if (!data) {
@@ -24,7 +24,7 @@ module.exports = class RedisStore {
   }
 
   // 存储session数据到redis
-  set = async (key, sessionValue, lifetime) => {
+  async set(key, sessionValue, lifetime) {
     if (typeof lifetime === 'number') {
       // redis数据库的过期时间是以s为单位所以需要除以1000
       lifetime = Math.ceil(lifetime / 1000)
@@ -44,7 +44,7 @@ module.exports = class RedisStore {
   }
 
   // 从redis中删除某个session
-  destroy = async (key) => {
+  async destroy(key) {
     await this.client.del(key)
   }
 }

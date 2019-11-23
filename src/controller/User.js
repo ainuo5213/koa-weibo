@@ -2,14 +2,15 @@
  * @description user controller
  * @author ainuo5213
  */
-const {getUserInfo, createUser} = require('../service/user')
+const {getUserInfo, createUser, deleteUser} = require('../service/user')
 const doCrypto = require('../utils/crypto')
 const {ErrorModel, SuccessModel} = require('../response/resultModel')
 const {
   registerUserNameNotExistInfo,
   registerUserNameExistInfo,
   registerFailInfo,
-  loginFailInfo
+  loginFailInfo,
+  deleteUserFailInfo
 } = require('../response/errorInfo')
 
 class User {
@@ -18,7 +19,7 @@ class User {
    * @param userName
    * @return {Promise<*>}
    */
-  isExist = async userName => {
+  async isExist(userName) {
     let userInfo = await getUserInfo(userName)
     if (userInfo) {
       return new SuccessModel(userInfo)
@@ -26,6 +27,7 @@ class User {
       return new ErrorModel(registerUserNameNotExistInfo)
     }
   }
+
   /**
    * 注册
    * @param userName
@@ -33,7 +35,7 @@ class User {
    * @param gender(1男，2女，3保密)
    * @return {Promise<void>}
    */
-  register = async ({userName, password, gender}) => {
+  async register({userName, password, gender}) {
     let userInfo = await getUserInfo(userName)
     if (userInfo) {
       // 用户名已存在
@@ -48,6 +50,7 @@ class User {
       }
     }
   }
+
   /**
    * 登陆
    * @param ctx 上下文，用于设置session
@@ -55,7 +58,7 @@ class User {
    * @param password
    * @return {Promise<void>}
    */
-  login = async (ctx, userName, password) => {
+  async login(ctx, userName, password) {
     // 获取用户信息
     let userInfo = await getUserInfo(userName, doCrypto(password))
     // 有该用户
@@ -66,6 +69,15 @@ class User {
       return new SuccessModel()
     } else {
       return new ErrorModel(loginFailInfo)
+    }
+  }
+
+  async deleteCurUser(userName) {
+    let res = await deleteUser(userName)
+    if (res) {
+      return new SuccessModel()
+    } else {
+      return new ErrorModel(deleteUserFailInfo)
     }
   }
 }

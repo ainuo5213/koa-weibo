@@ -27,7 +27,7 @@ const User = seq.define('t_user', {
     type: DECIMAL,
     allowNull: false,
     comment: '性别:1(男)2(女)3(保密)，默认保密',
-    default: 3
+    defaultValue: 3,
   },
   picture: {
     type: STRING,
