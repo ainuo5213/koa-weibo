@@ -54,15 +54,37 @@ test('登陆应该成功', async () => {
   // 设置cookie
   COOKIE = res.headers['set-cookie'].join(';')
 })
+// 修改基本信息
 
+test('修改基本信息应该成功', async () => {
+  const res = await server.patch('/api/user/changeInfo').send({
+    nickName: '测试昵称',
+    city: '测试城市',
+    picture: '/test.png'
+  }).set('cookie', COOKIE)
+  expect(res.body.errorno).toBe(0)
+})
+// 修改密码应该
+test('修改密码应该成功', async () => {
+  const res = await server.patch('/api/user/changePassword').send({
+    newPassword: `p_${Date.now()}`,
+    password
+  }).set('cookie', COOKIE)
+  expect(res.body.errorno).toBe(0)
+})
 // 删除
 test('删除用户应该成功', async () => {
   const res = await server.post('/api/user/delete').set('cookie', COOKIE)
   expect(res.body.errorno).toBe(0)
 })
-
+// 退出登陆
+test('退出登陆应该成功', async () => {
+  const res = await server.post('/api/user/logout').set('cookie', COOKIE)
+  expect(res.body.errorno).toBe(0)
+})
 // 再次查询用户应该不存在
 test('查询注册的用户名应该不存在', async () => {
   const res = await server.post('/api/user/isExist').send({userName})
   expect(res.body.errorno).not.toBe(0)
 })
+
