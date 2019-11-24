@@ -12,7 +12,8 @@ const {
   registerFailInfo,
   loginFailInfo,
   deleteUserFailInfo,
-  changeInfoFailInfo
+  changeInfoFailInfo,
+  changePasswordFailInfo
 } = require('../response/errorInfo')
 const fse = require('fs-extra')
 
@@ -117,6 +118,26 @@ class User {
       return new SuccessModel()
     }
     return new ErrorModel(changeInfoFailInfo)
+  }
+
+  /**
+   * 修改密码
+   * @param userName
+   * @param password
+   * @param newPassword
+   * @return {Promise<ErrorModel|*>}
+   */
+  async changePassword({userName, password, newPassword}) {
+    const res = await updateUser({newPassword: doCrypto(newPassword)}, {userName, password: doCrypto(password)})
+    if (res) {
+      return new SuccessModel()
+    } else {
+      return new ErrorModel(changePasswordFailInfo)
+    }
+  }
+  async logout(ctx) {
+    delete ctx.session.userInfo
+    return new SuccessModel()
   }
 }
 
