@@ -46,12 +46,12 @@ async function getUserInfo(userName, password) {
  * @return {Promise<void>}
  */
 async function createUser({userName, password, gender = 3, nickName}) {
-  const res = await User.create({
+  const res = await User.create(formatUser({
     userName,
     password,
     gender,
     nickName: nickName ? nickName : userName
-  })
+  }))
   return res.dataValues
 }
 
