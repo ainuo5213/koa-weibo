@@ -39,5 +39,6 @@ async function saveFile({size, filePath, name, type}) {
 }
 
 module.exports = {
-  saveFile
+  saveFile,
+  uploadDir
 }

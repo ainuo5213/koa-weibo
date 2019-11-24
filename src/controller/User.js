@@ -2,16 +2,19 @@
  * @description user controller
  * @author ainuo5213
  */
-const {getUserInfo, createUser, deleteUser} = require('../service/user')
+const {getUserInfo, createUser, deleteUser, updateUser} = require('../service/user')
 const doCrypto = require('../utils/crypto')
+const {uploadDir} = require('../controller/Util')
 const {ErrorModel, SuccessModel} = require('../response/resultModel')
 const {
   registerUserNameNotExistInfo,
   registerUserNameExistInfo,
   registerFailInfo,
   loginFailInfo,
-  deleteUserFailInfo
+  deleteUserFailInfo,
+  changeInfoFailInfo
 } = require('../response/errorInfo')
+const fse = require('fs-extra')
 
 class User {
   /**
@@ -79,6 +82,41 @@ class User {
     } else {
       return new ErrorModel(deleteUserFailInfo)
     }
+  }
+
+  /**
+   * 修改个人信息
+   * @param ctx
+   * @param nickName
+   * @param city
+   * @param picture
+   * @return {Promise<void>}
+   */
+  async changeInfo(ctx, {nickName, city, picture}) {
+    const {userName} = ctx.session.userInfo
+    if (!nickName) {
+      nickName = userName
+    }
+    // service
+    const res = await updateUser({
+      newNickName: nickName,
+      newCity: city,
+      newPicture: picture
+    }, {
+      userName
+    })
+    if (res) {
+      let picPath = uploadDir + ctx.session.userInfo.picture
+      fse.pathExists(picture) && await fse.remove(picPath)
+      // 更新session
+      Object.assign(ctx.session.userInfo, {
+        nickName,
+        city,
+        picture
+      })
+      return new SuccessModel()
+    }
+    return new ErrorModel(changeInfoFailInfo)
   }
 }
 

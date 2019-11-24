@@ -65,8 +65,50 @@ async function deleteUser(userName) {
   return res > 0
 }
 
+/**
+ * 更新用户
+ * 更新内容
+ * @param newPassword
+ * @param newNickName
+ * @param newPicture
+ * @param newCity
+ * 查询条件
+ * @param userName 以userName进行更新
+ * @param password 以password进行更新
+ * @return {Promise<void>}
+ */
+async function updateUser({newPassword, newNickName, newPicture, newCity}, {userName, password}) {
+  // 拼接修改内容
+  const updateData = {}
+  if (newPassword) {
+    updateData.password = newPassword
+  }
+  if (newNickName) {
+    updateData.nickName = newNickName
+  }
+  if (newPicture) {
+    updateData.picture = newPicture
+  }
+  if (newCity) {
+    updateData.city = newCity
+  }
+  // 拼接查询条件
+  const whereData = {
+    userName
+  }
+  if (password) {
+    whereData.password = password
+  }
+  // 执行修改
+  const res = await User.update(updateData, {
+    where: whereData
+  })
+  return res[0] > 0 // 修改的行数
+}
+
 module.exports = {
   getUserInfo,
   createUser,
-  deleteUser
+  deleteUser,
+  updateUser
 }

@@ -50,7 +50,7 @@ const SCHEMA = {
  * @return {*}
  */
 const userValidate = (data = {}) => {
-  return validate(SCHEMA, {...data, gender: +data.gender})
+  return validate(SCHEMA, data)
 }
 
 

@@ -35,4 +35,8 @@ router.post('/login', async ctx => {
   const {userName, password} = ctx.request.body
   ctx.body = await user.login(ctx, userName, password)
 })
+router.patch('/changeInfo', loginCheck, genValidator(userValidator), async ctx => {
+  const {nickName, city, picture} = ctx.request.body
+  ctx.body = await user.changeInfo(ctx, {nickName, city, picture})
+})
 module.exports = router
