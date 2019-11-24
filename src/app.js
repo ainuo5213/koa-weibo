@@ -3,7 +3,8 @@ const app = new Koa()
 const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
-const body = require('koa-body')
+const path = require('path')
+const koaBody = require('koa-body')
 // const jwt = require('koa-jwt')
 const logger = require('koa-logger')
 const session = require('koa-session')
@@ -14,6 +15,7 @@ const RedisStore = require('./cache/redis')
 const client = require('./cache/_redis')
 const {isProduction} = require('./utils/env')
 const {SESSION_KEY} = require('./config/constants')
+const koaStatic = require('koa-static')
 // error handler
 let errorConf = {}
 if (isProduction) {
@@ -40,12 +42,17 @@ const SESSION_CONFIG = {
 }
 app.use(session(SESSION_CONFIG, app))
 // middlewares
-app.use(body({
-  enableTypes: ['json', 'form', 'text']
+app.use(koaBody({
+  enableTypes: ['json', 'form', 'text'],
+  // formidable: {
+  //   uploadDir: path.resolve(__dirname, './public/images'),
+  //   keepExtensions: true
+  // }
 }))
 app.use(json())
 app.use(logger())
-app.use(require('koa-static')(__dirname + '/public'))
+app.use(koaStatic(__dirname + '/public'))
+app.use(koaStatic(path.resolve(__dirname, '../uploads')))
 // ejs
 app.use(views(__dirname + '/views', {
   extension: 'ejs'
