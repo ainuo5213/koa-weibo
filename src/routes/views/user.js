@@ -22,10 +22,6 @@ function getLoginInfo(ctx) {
   return data
 }
 
-router.get('/', loginRedirect, async ctx => {
-  await ctx.render('index', {})
-})
-
 router.get('/login', async ctx => {
   await ctx.render('login', getLoginInfo(ctx))
 })
