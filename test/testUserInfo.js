@@ -8,5 +8,6 @@
  * @type {{COOKIE: string}}
  */
 module.exports = {
-  COOKIE: 'weibo.sid=weibo:sess:381fbf63-dd8c-4ce8-842f-9b7b954c2b74; weibo.sid.sig=_l8LlaGXhj5yNzXgazb9pxvHlwA'
+  COOKIE: 'weibo.sid=weibo:sess:7ce9abdc-1c4b-447e-9c33-03913504de75; weibo.sid.sig=iaDrE4yFZ9OHUJFtk97o1EC-28A',
+  USER_NAME: 'ainuo'
 }

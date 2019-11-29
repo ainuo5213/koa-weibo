@@ -17,7 +17,6 @@ router.get('/loadMore/:userName/:pageIndex', loginCheck, async ctx => {
   const res = await getProfileBlogList(userName, pageIndex)
   res.data.blogListTpl = getBlogListStr(res.data.blogList)
   ctx.body = res
-  console.log(ctx.body)
 })
 
 module.exports = router

@@ -7,11 +7,11 @@ const Blog = require('../../src/model/Blog')
 // 微博数据模型
 test('微博数据模型各个属性符合预期', () => {
   const blog = Blog.build({
-    user_id: 1,
+    userId: 1,
     content: '微博内容',
     image: '/test.jpg',
   })
-  expect(blog.user_id).toBe(1)
+  expect(blog.userId).toBe(1)
   expect(blog.content).toBe('微博内容')
   expect(blog.image).toBe('/test.jpg')
 })
