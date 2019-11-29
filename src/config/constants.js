@@ -3,5 +3,6 @@ module.exports = {
   default_avatar: '/images/default_avatar.jpg',
   CRYPTO_KEY: 'SYGxth.#$%_',
   SESSION_KEY: 'XTHsyg201314.#$',
-  PAGE_SIZE: 5
+  PAGE_SIZE: 5,
+  REG_FOR_AT_WHO: /@(.+?)\s-\s(\w+?)\b/g
 }

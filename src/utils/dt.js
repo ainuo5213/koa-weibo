@@ -3,10 +3,10 @@
  * @author ainuo5213
  */
 const {format} = require('date-fns')
-function formatTime(str) {
+function timeFormat(str) {
   return format(new Date(str), 'MM.dd HH:mm')
 }
 
 module.exports = {
-  formatTime
+  timeFormat
 }

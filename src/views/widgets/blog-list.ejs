@@ -13,7 +13,7 @@
             <span><%- blog.content%></span>
         </div>
         <div class="info">
-            <span><%= blog.createdAt%></span>
+            <span><%= blog.createdAtFormat%></span>
             <% if (locals.canReply) { %>
             <%# 可以回复 %>
             <a href="#" class="blog-list-reply"

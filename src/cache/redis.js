@@ -24,7 +24,7 @@ module.exports = class RedisStore {
   }
 
   // 存储session数据到redis
-  async set(key, sessionValue, lifetime) {
+  async set(key, sessionValue, lifetime = 60 * 1000 * 60 /*默认缓存1小时*/) {
     if (typeof lifetime === 'number') {
       // redis数据库的过期时间是以s为单位所以需要除以1000
       lifetime = Math.ceil(lifetime / 1000)
