@@ -1765,13 +1765,6 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-formidable-upload-koa@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npm.taobao.org/formidable-upload-koa/download/formidable-upload-koa-1.0.1.tgz#0bfd4ea03928d425c4b2e7e9038ba56c242ab21e"
-  integrity sha1-C/1OoDko1CXEsufpA4ulbCQqsh4=
-  dependencies:
-    formidable "^1.1.1"
-
 formidable@^1.1.1, formidable@^1.2.0:
   version "1.2.1"
   resolved "https://registry.npm.taobao.org/formidable/download/formidable-1.2.1.tgz#70fb7ca0290ee6ff961090415f4b3df3d2082659"

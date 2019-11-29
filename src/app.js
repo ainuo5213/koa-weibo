@@ -43,11 +43,11 @@ const SESSION_CONFIG = {
 app.use(session(SESSION_CONFIG, app))
 // middlewares
 app.use(koaBody({
-  enableTypes: ['json', 'form', 'text'],
-  // formidable: {
-  //   uploadDir: path.resolve(__dirname, './public/images'),
-  //   keepExtensions: true
-  // }
+  multipart: true,
+  formidable: {
+    uploadDir: path.resolve(__dirname, './public/images'),
+    keepExtensions: true
+  }
 }))
 app.use(json())
 app.use(logger())
