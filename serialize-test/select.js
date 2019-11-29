@@ -39,38 +39,38 @@ const {Blog, User} = require('./module');
   // });
   // console.log(blogListAndCount.count, blogListAndCount.rows.map(data => data.dataValues))
   // 联表查询1 blog -> user
-  // const blogListWithUser = await Blog.findAndCountAll({
-  //   order: [['id', 'desc']],
-  //   include: [
-  //     {
-  //       model: User,
-  //       as: 'user',
-  //       attributes: ['username', ['nickname', '昵称']],
-  //       where: {
-  //         username: 'zhangsan'
-  //       }
-  //     }
-  //   ]
-  // });
-  // console.log(blogListWithUser.rows.map(data => {
-  //   const blog = data.dataValues;
-  //   const user = blog.user.dataValues;
-  //   blog.user = user;
-  //   return blog
-  // }))
-  const userListWithBlog = await User.findAndCountAll({
-    attributes: ['username', ['nickname', '昵称']],
+  const blogListWithUser = await Blog.findAndCountAll({
+    order: [['id', 'desc']],
     include: [
       {
-        model: Blog,
+        model: User,
+        attributes: ['username', ['nickname', '昵称']],
+        where: {
+          username: 'zhangsan'
+        }
       }
     ]
   });
-  console.log(userListWithBlog.count,
-      userListWithBlog.rows.map(userData => {
-        const user = userData.dataValues;
-        const blog = user.blogs.map(blog => blog.dataValues);
-        user.blogs = blog;
-        return user
-      }))
+  console.log(blogListWithUser.rows)
+  // console.log(blogListWithUser.rows.map(data => {
+  //   const blog = data.dataValues;
+  //   const user = blog.t_user.dataValues;
+  //   blog.t_user = user;
+  //   return blog
+  // }))
+  // const userListWithBlog = await User.findAndCountAll({
+  //   attributes: ['username', ['nickname', '昵称']],
+  //   include: [
+  //     {
+  //       model: Blog,
+  //     }
+  //   ]
+  // });
+  // console.log(userListWithBlog.count,
+  //     userListWithBlog.rows.map(userData => {
+  //       const user = userData.dataValues;
+  //       const blog = user.blogs.map(blog => blog.dataValues);
+  //       user.blogs = blog;
+  //       return user
+  //     }))
 })();

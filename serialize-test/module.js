@@ -1,7 +1,7 @@
 const Seq = require('sequelize');
 const seq = require('./seq');
 
-const User = seq.define('users', {
+const User = seq.define('t_users', {
   username: {
     type: Seq.STRING,
     allowNull: false
@@ -17,7 +17,7 @@ const User = seq.define('users', {
   }
   // 会自动创建createdAt和updatedAt
 });
-const Blog = seq.define('blogs', {
+const Blog = seq.define('t_blogs', {
   title: {
     type: Seq.STRING,
     allowNull: false

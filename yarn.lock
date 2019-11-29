@@ -1171,6 +1171,11 @@ data-urls@^1.0.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
+date-fns@^2.8.1:
+  version "2.8.1"
+  resolved "https://registry.npm.taobao.org/date-fns/download/date-fns-2.8.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdate-fns%2Fdownload%2Fdate-fns-2.8.1.tgz#2109362ccb6c87c3ca011e9e31f702bc09e4123b"
+  integrity sha1-IQk2LMtsh8PKAR6eMfcCvAnkEjs=
+
 debug@^2.2.0, debug@^2.3.3:
   version "2.6.9"
   resolved "https://registry.npm.taobao.org/debug/download/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
@@ -1359,10 +1364,10 @@ ee-first@1.1.1:
   resolved "https://registry.npm.taobao.org/ee-first/download/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
-ejs@^2.7.3:
-  version "2.7.3"
-  resolved "https://registry.npm.taobao.org/ejs/download/ejs-2.7.3.tgz?cache=0&sync_timestamp=1574128831137&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fejs%2Fdownload%2Fejs-2.7.3.tgz#4f437b3992ea0e0757f0ab8d7f29e42593498927"
-  integrity sha1-T0N7OZLqDgdX8KuNfynkJZNJiSc=
+ejs@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npm.taobao.org/ejs/download/ejs-3.0.1.tgz?cache=0&sync_timestamp=1574560231725&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fejs%2Fdownload%2Fejs-3.0.1.tgz#30c8f6ee9948502cc32e85c37a3f8b39b5a614a5"
+  integrity sha1-MMj27plIUCzDLoXDej+LObWmFKU=
 
 emoji-regex@^7.0.1:
   version "7.0.3"
@@ -4510,7 +4515,7 @@ sequelize-pool@^2.3.0:
   resolved "https://registry.npm.taobao.org/sequelize-pool/download/sequelize-pool-2.3.0.tgz#64f1fe8744228172c474f530604b6133be64993d"
   integrity sha1-ZPH+h0QigXLEdPUwYEthM75kmT0=
 
-sequelize@^5.21.2:
+sequelize@^5.18.0:
   version "5.21.2"
   resolved "https://registry.npm.taobao.org/sequelize/download/sequelize-5.21.2.tgz#0daeee9bef37d49490b72a2c6891d53044f65a18"
   integrity sha1-Da7um+831JSQtyosaJHVMET2Whg=

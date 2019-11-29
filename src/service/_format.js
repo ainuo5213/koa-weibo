@@ -3,7 +3,6 @@
  * @author ainuo5213
  */
 const {default_avatar} = require('../config/constants')
-
 /**
  * 格式化单个用户的头像
  * @param obj 用户对象
@@ -31,6 +30,11 @@ function formatUser(list) {
 }
 
 
+function _formatBlogContent(obj) {
+
+}
+
+
 module.exports = {
-  formatUser
+  formatUser,
 }

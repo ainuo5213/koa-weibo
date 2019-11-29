@@ -1,25 +1,26 @@
 /**
  * @description 微博数据模型
- * @author ainuo5213
+ * @author 双越老师
  */
 
 const seq = require('../db/seq')
-const {TEXT, STRING, INTEGER} = require('sequelize')
+const { INTEGER, STRING, TEXT } = require('../db/types')
 
-const Blog = seq.define('t_blogs', {
-  user_id: {
-    type: INTEGER,
-    allowNull: false,
-    comment: '用户id'
-  },
-  content: {
-    type: TEXT,
-    allow: false,
-    comment: '微博内容'
-  },
-  image: {
-    type: STRING,
-    comment: '图片地址'
-  }
+const Blog = seq.define('blog', {
+    userId: {
+        type: INTEGER,
+        allowNull: false,
+        comment: '用户 ID'
+    },
+    content: {
+        type: TEXT,
+        allowNull: false,
+        comment: '微博内容'
+    },
+    image: {
+        type: STRING,
+        comment: '图片地址'
+    }
 })
+
 module.exports = Blog

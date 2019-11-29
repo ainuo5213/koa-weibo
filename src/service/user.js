@@ -4,7 +4,7 @@
  *
  */
 
-const User = require('../model/User')
+const {User} = require('../model')
 const {formatUser} = require('./_format')
 
 /**
