@@ -7,6 +7,7 @@ const router = new Router()
 const {loginRedirect} = require('../../middleware/loginChecks')
 const {getSquareBlogList} = require('../../controller/blog-squre')
 const {getProfileBlogList} = require('../../controller/Profile')
+const {getFans} = require('../../controller/user-relation')
 router.get('/', loginRedirect, async ctx => {
   await ctx.render('index', {
     blogData: null
@@ -20,6 +21,10 @@ router.get('/profile/:userName', loginRedirect, async ctx => {
   const curUserName = ctx.params.userName
   const res = await getProfileBlogList(curUserName, 0)
   const {isEmpty, blogList, pageSize, pageIndex, count} = res.data
+  // 获取粉丝
+  // controller
+  const fansRes = await getFans(ctx.session.userInfo.id)
+  const fansData = fansRes.data
   // 获取微博第一页的数据
   await ctx.render('profile', {
     blogData: {
@@ -31,7 +36,8 @@ router.get('/profile/:userName', loginRedirect, async ctx => {
     },
     userData: {
       userInfo: ctx.session.userInfo,
-      isMe: ctx.params.userName === ctx.session.userInfo.userName
+      isMe: ctx.params.userName === ctx.session.userInfo.userName,
+      fansData
     }
   })
 })
