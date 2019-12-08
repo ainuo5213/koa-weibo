@@ -1,0 +1,155 @@
+[1mdiff --git a/src/controller/user-relation.js b/src/controller/user-relation.js[m
+[1mindex 643cd72..c82edb5 100644[m
+[1m--- a/src/controller/user-relation.js[m
+[1m+++ b/src/controller/user-relation.js[m
+[36m@@ -2,7 +2,7 @@[m
+  * @description 用户关系controller[m
+  * @author ainuo5213[m
+  */[m
+[31m-const {getUserByFollower, addFollower, deleteFollower} = require('../service/user-relation')[m
+[32m+[m[32mconst {getUserByFollower, addFollower, deleteFollower, getFollowersByUser} = require('../service/user-relation')[m
+ const {SuccessModel, ErrorModel} = require('../response/resultModel')[m
+ const {addFollowerFailInfo, deleteFollowerFailInfo} = require('../response/errorInfo')[m
+ class Fans {[m
+[36m@@ -45,6 +45,17 @@[m [mclass Fans {[m
+       return new ErrorModel(deleteFollowerFailInfo)[m
+     }[m
+   }[m
+[32m+[m
+[32m+[m[32m  /**[m
+[32m+[m[32m   * 获取关注人列表[m
+[32m+[m[32m   * @param userId[m
+[32m+[m[32m   * @return {Promise<void>}[m
+[32m+[m[32m   */[m
+[32m+[m[32m  async getFollowers(userId) {[m
+[32m+[m[32m    // service[m
+[32m+[m[32m    let res = await getFollowersByUser(userId)[m
+[32m+[m[32m    return new SuccessModel(res)[m
+[32m+[m[32m  }[m
+ }[m
+ [m
+ module.exports = new Fans()[m
+[1mdiff --git a/src/routes/views/blog.js b/src/routes/views/blog.js[m
+[1mindex 493d2ca..f17d360 100644[m
+[1m--- a/src/routes/views/blog.js[m
+[1m+++ b/src/routes/views/blog.js[m
+[36m@@ -7,7 +7,7 @@[m [mconst router = new Router()[m
+ const {loginRedirect} = require('../../middleware/loginChecks')[m
+ const {getSquareBlogList} = require('../../controller/blog-squre')[m
+ const {getProfileBlogList} = require('../../controller/Profile')[m
+[31m-const {getFans} = require('../../controller/user-relation')[m
+[32m+[m[32mconst {getFans, getFollowers} = require('../../controller/user-relation')[m
+ const {isExist} = require('../../controller/User')[m
+ router.get('/', loginRedirect, async ctx => {[m
+   await ctx.render('index', {[m
+[36m@@ -25,7 +25,7 @@[m [mrouter.get('/profile/:userName', loginRedirect, async ctx => {[m
+ [m
+   // 当前网页显示的用户[m
+   let curUserInfo[m
+[31m-  const { userName: curUserName } = ctx.params[m
+[32m+[m[32m  const {userName: curUserName} = ctx.params[m
+   // 当前网页显示的用户是否是自己[m
+   const isMe = myUserName === curUserName[m
+   if (isMe) {[m
+[36m@@ -54,6 +54,10 @@[m [mrouter.get('/profile/:userName', loginRedirect, async ctx => {[m
+   // 我是否关注了此人，从该用户的粉丝列表中是否有我得出我是否关注了ta[m
+   const amIFollowed = fansData.list.some(item => item.userName === myUserName)[m
+ [m
+[32m+[m[32m  // 获取关注人列表[m
+[32m+[m[32m  const followersRes = await getFollowers(curUserInfo.id)[m
+[32m+[m[32m  const {count: followersCount, userList: list} = followersRes.data[m
+[32m+[m
+   await ctx.render('profile', {[m
+     blogData: {[m
+       isEmpty,[m
+[36m@@ -66,7 +70,11 @@[m [mrouter.get('/profile/:userName', loginRedirect, async ctx => {[m
+       userInfo: curUserInfo,[m
+       isMe,[m
+       fansData,[m
+[31m-      amIFollowed[m
+[32m+[m[32m      amIFollowed,[m
+[32m+[m[32m      followersData: {[m
+[32m+[m[32m        count: followersCount,[m
+[32m+[m[32m        list[m
+[32m+[m[32m      }[m
+     }[m
+   })[m
+ })[m
+[1mdiff --git a/src/service/user-relation.js b/src/service/user-relation.js[m
+[1mindex db3a09e..047c03b 100644[m
+[1m--- a/src/service/user-relation.js[m
+[1m+++ b/src/service/user-relation.js[m
+[36m@@ -47,6 +47,12 @@[m [masync function addFollower(userId, followerId) {[m
+   return result.dataValues[m
+ }[m
+ [m
+[32m+[m[32m/**[m
+[32m+[m[32m * 取消关注[m
+[32m+[m[32m * @param userId[m
+[32m+[m[32m * @param followerId[m
+[32m+[m[32m * @return {Promise<boolean>}[m
+[32m+[m[32m */[m
+ async function deleteFollower(userId, followerId) {[m
+   const result = await UserRelation.destroy({[m
+     where: {[m
+[36m@@ -57,8 +63,42 @@[m [masync function deleteFollower(userId, followerId) {[m
+   return result > 0[m
+ }[m
+ [m
+[32m+[m[32m/**[m
+[32m+[m[32m * 获取我的关注列表[m
+[32m+[m[32m * @param userId[m
+[32m+[m[32m * @return {Promise<{userList: *[], count: number}>}[m
+[32m+[m[32m */[m
+[32m+[m[32masync function getFollowersByUser(userId) {[m
+[32m+[m[32m  // 通过在UserRelation模型中查找到userId的followerId，然后级联User查询[m
+[32m+[m[32m  const result = await UserRelation.findAndCountAll({[m
+[32m+[m[32m    order: [[m
+[32m+[m[32m      ['id', 'desc'][m
+[32m+[m[32m    ],[m
+[32m+[m[32m    include: [[m
+[32m+[m[32m      {[m
+[32m+[m[32m        model: User,[m
+[32m+[m[32m        attributes: ['id', 'userName', 'nickName', 'picture'],[m
+[32m+[m[32m      }[m
+[32m+[m[32m    ],[m
+[32m+[m[32m    where: {[m
+[32m+[m[32m      userId[m
+[32m+[m[32m    }[m
+[32m+[m[32m  })[m
+[32m+[m[32m  let userList = result.rows.map(row => row.dataValues)[m
+[32m+[m[32m  userList = userList.map(item => {[m
+[32m+[m[32m    let user = item.user.dataValues[m
+[32m+[m[32m    user = formatUser(user)[m
+[32m+[m[32m    return user[m
+[32m+[m[32m  })[m
+[32m+[m[32m  return {[m
+[32m+[m[32m    count: result.count,[m
+[32m+[m[32m    userList[m
+[32m+[m[32m  }[m
+[32m+[m[32m}[m
+[32m+[m
+ module.exports = {[m
+   getUserByFollower,[m
+   addFollower,[m
+[31m-  deleteFollower[m
+[32m+[m[32m  deleteFollower,[m
+[32m+[m[32m  getFollowersByUser[m
+ }[m
+[1mdiff --git a/src/views/profile.ejs b/src/views/profile.ejs[m
+[1mindex cdbd582..576a609 100644[m
+[1m--- a/src/views/profile.ejs[m
+[1m+++ b/src/views/profile.ejs[m
+[36m@@ -47,6 +47,12 @@[m
+             userList: userData.fansData.list[m
+             })%>[m
+ [m
+[32m+[m[32m            <!-- 关注 -->[m
+[32m+[m[32m            <%- include('widgets/followers', {[m
+[32m+[m[32m            count: userData.followersData.count,[m
+[32m+[m[32m            userList: userData.followersData.list[m
+[32m+[m[32m            })%>[m
+[32m+[m
+         </div> <!-- 右侧结束 -->[m
+     </div>[m
+ </div>[m

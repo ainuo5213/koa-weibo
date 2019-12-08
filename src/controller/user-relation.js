@@ -2,7 +2,7 @@
  * @description 用户关系controller
  * @author ainuo5213
  */
-const {getUserByFollower, addFollower, deleteFollower} = require('../service/user-relation')
+const {getUserByFollower, addFollower, deleteFollower, getFollowersByUser} = require('../service/user-relation')
 const {SuccessModel, ErrorModel} = require('../response/resultModel')
 const {addFollowerFailInfo, deleteFollowerFailInfo} = require('../response/errorInfo')
 class Fans {
@@ -44,6 +44,17 @@ class Fans {
       console.log(e)
       return new ErrorModel(deleteFollowerFailInfo)
     }
+  }
+
+  /**
+   * 获取关注人列表
+   * @param userId
+   * @return {Promise<void>}
+   */
+  async getFollowers(userId) {
+    // service
+    let res = await getFollowersByUser(userId)
+    return new SuccessModel(res)
   }
 }
 

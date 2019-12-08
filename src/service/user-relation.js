@@ -47,6 +47,12 @@ async function addFollower(userId, followerId) {
   return result.dataValues
 }
 
+/**
+ * 取消关注
+ * @param userId
+ * @param followerId
+ * @return {Promise<boolean>}
+ */
 async function deleteFollower(userId, followerId) {
   const result = await UserRelation.destroy({
     where: {
@@ -57,8 +63,42 @@ async function deleteFollower(userId, followerId) {
   return result > 0
 }
 
+/**
+ * 获取我的关注列表
+ * @param userId
+ * @return {Promise<{userList: *[], count: number}>}
+ */
+async function getFollowersByUser(userId) {
+  // 通过在UserRelation模型中查找到userId的followerId，然后级联User查询
+  const result = await UserRelation.findAndCountAll({
+    order: [
+      ['id', 'desc']
+    ],
+    include: [
+      {
+        model: User,
+        attributes: ['id', 'userName', 'nickName', 'picture'],
+      }
+    ],
+    where: {
+      userId
+    }
+  })
+  let userList = result.rows.map(row => row.dataValues)
+  userList = userList.map(item => {
+    let user = item.user.dataValues
+    user = formatUser(user)
+    return user
+  })
+  return {
+    count: result.count,
+    userList
+  }
+}
+
 module.exports = {
   getUserByFollower,
   addFollower,
-  deleteFollower
+  deleteFollower,
+  getFollowersByUser
 }
