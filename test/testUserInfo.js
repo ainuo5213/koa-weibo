@@ -8,6 +8,11 @@
  * @type {{COOKIE: string}}
  */
 module.exports = {
-  COOKIE: 'weibo.sid=weibo:sess:b37cbcc7-995a-4c11-8f64-9b461879f524; weibo.sid.sig=6ei-Luxxxp5wYlR0YdnrsffmM9E',
-  USER_NAME: 'ainuo'
+  Z_COOKIE: 'weibo.sid=weibo:sess:a8f73ef1-9357-46c8-88b9-6f6ab54db48a; weibo.sid.sig=4IKsLQXVnkY7HthvOPPTULuFQPU',
+  USER_NAME: 'zhangsan',
+  Z_USER_NAME: 'zhangsan',
+  Z_ID: 1,
+  L_ID: 2,
+  L_USER_NAME: 'lisi',
+  L_COOKIE: 'weibo.sid=weibo:sess:3146db75-06f1-44af-8ccb-b45d0fd7234f; weibo.sid.sig=CdP8_aLgpofFror85RZNdgOUOrg'
 }

@@ -41,7 +41,6 @@ class Fans {
       await deleteFollower(myId, curUserId)
       return new SuccessModel()
     } catch (e) {
-      console.log(e)
       return new ErrorModel(deleteFollowerFailInfo)
     }
   }
