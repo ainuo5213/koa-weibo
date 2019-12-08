@@ -5,6 +5,7 @@
  */
 
 const {User} = require('../model')
+const {addFollower} = require('./user-relation')
 const {formatUser} = require('./_format')
 
 /**
@@ -52,7 +53,10 @@ async function createUser({userName, password, gender = 3, nickName}) {
     gender,
     nickName: nickName ? nickName : userName
   }))
-  return res.dataValues
+  const data = res.dataValues
+  // 自己关注自己，方便首页获取数据
+  await addFollower(data.id, data.id)
+  return data
 }
 
 async function deleteUser(userName) {
