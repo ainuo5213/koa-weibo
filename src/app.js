@@ -37,7 +37,7 @@ const SESSION_CONFIG = {
   key: 'weibo.sid',// session的名字
   store: new RedisStore(client.redis), // sessionStore
   prefix: 'weibo:sess:', // 前缀
-  maxAge: 24 * 60 * 60 * 1000, // ttl,
+  maxAge: 60 * 60 * 1000, // ttl,
   httpOnly: true,
 }
 app.use(session(SESSION_CONFIG, app))

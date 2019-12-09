@@ -21,6 +21,7 @@ Blog.belongsTo(User, {
 })
 Blog.belongsTo(UserRelation, {
   foreignKey: 'userId',
+  // 指定blog的外键关联的是userRelation的followerId，否则默认关联的是user表的id
   targetKey: 'followerId'
 })
 module.exports = {
