@@ -9,10 +9,10 @@
  */
 module.exports = {
   Z_ID: 1,
-  Z_COOKIE: 'weibo.sid=weibo:sess:adf8c740-af7e-45ba-9eb3-5f229d421fb7; weibo.sid.sig=8_KgpHGMVwl71w-od0O0nEjHYVM',
+  Z_COOKIE: 'weibo.sid=weibo:sess:90f19cdd-76fe-4331-b287-8a894d6a5403; weibo.sid.sig=pbs4iwoOG-vjcIjQviaJ3zG82WU',
   Z_USER_NAME: 'zhangsan',
 
   L_ID: 2,
-  L_COOKIE: 'weibo.sid=weibo:sess:07578015-79ee-482a-b53a-9006763e1d5d; weibo.sid.sig=HMYRVeeo47aE910GcmpSiN-1Y9I',
+  L_COOKIE: 'weibo.sid=weibo:sess:561966e1-f302-4e8f-a105-8a2c78193df7; weibo.sid.sig=FYhB-Udnr-xd8kKGfhynaMtn1_I',
   L_USER_NAME: 'lisi'
 }
