@@ -70,7 +70,7 @@ function formatBlog(list) {
   }
 
   if (list instanceof Array) {
-    // 数组
+    // 数组，格式化时间和微博内容（对@的处理）
     return list.map(_formatDBTime).map(_formatContent)
   }
   // 对象

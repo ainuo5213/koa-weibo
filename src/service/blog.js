@@ -56,7 +56,7 @@ async function getBlogListByUser({userName, pageIndex = 0, pageSize = 10}) {
 
   // 获取 dataValues
   let blogList = result.rows.map(row => row.dataValues)
-
+  // 从数据库取数据之后格式化微博
   blogList = formatBlog(blogList)
   // 格式化
   blogList = blogList.map(blogItem => {
