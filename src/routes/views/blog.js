@@ -10,6 +10,7 @@ const {getProfileBlogList} = require('../../controller/Profile')
 const {getFans, getFollowers} = require('../../controller/user-relation')
 const {isExist} = require('../../controller/User')
 const {getHomeBlogList} = require('../../controller/Home')
+const {getAtMeCount} = require('../../controller/blog-at')
 router.get('/', loginRedirect, async ctx => {
   // 已登录用户的信息
   const userInfo = ctx.session.userInfo
@@ -27,6 +28,10 @@ router.get('/', loginRedirect, async ctx => {
   const followersRes = await getFollowers(userId)
   const {count: followersCount, userList: list} = followersRes.data
 
+  // 获取at数量
+  const atCountRes = await getAtMeCount(userId)
+  const {count: atCount} = atCountRes.data
+
   await ctx.render('index', {
     userData: {
       userInfo,
@@ -34,7 +39,8 @@ router.get('/', loginRedirect, async ctx => {
       followersData: {
         count: followersCount,
         list
-      }
+      },
+      atCount
     },
     blogData: {
       isEmpty,
@@ -89,6 +95,10 @@ router.get('/profile/:userName', loginRedirect, async ctx => {
   const followersRes = await getFollowers(curUserInfo.id)
   const {count: followersCount, userList: list} = followersRes.data
 
+  // 获取@数量
+  const atCountRes = await getAtMeCount(myUserInfo.id)
+  const {count: atCount} = atCountRes.data
+
   await ctx.render('profile', {
     blogData: {
       isEmpty,
@@ -105,7 +115,8 @@ router.get('/profile/:userName', loginRedirect, async ctx => {
       followersData: {
         count: followersCount,
         list
-      }
+      },
+      atCount
     }
   })
 })
