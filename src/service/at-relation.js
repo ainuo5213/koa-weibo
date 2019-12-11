@@ -4,6 +4,7 @@
  */
 const {AtRelation, Blog, User} = require('../model')
 const {formatBlog, formatUser} = require('../service/_format')
+
 /**
  * 创建at关系
  * @param blogId 微博id
@@ -23,7 +24,7 @@ async function createAtRelation(blogId, userId) {
  * @param userId
  * @return {Promise<void>}
  */
-async function  getUnReadAtRelationCount(userId) {
+async function getUnReadAtRelationCount(userId) {
   const res = await AtRelation.findAndCountAll({
     where: {
       userId,
@@ -74,8 +75,35 @@ async function getAtUserBlogList({userId, pageIndex = 0, pageSize = 10}) {
   }
 }
 
+async function updateRelation(
+  {newIsRead}, // 更新的内容
+  {userId, isRead} // 更新条件
+) {
+  // 拼接更新内容
+  const updateData = {}
+  if (newIsRead) {
+    updateData.isRead = newIsRead
+  }
+  // 拼接查询条件
+  const whereData = {}
+  if (userId) {
+    whereData.userId = userId
+  }
+  if (isRead) {
+    whereData.isRead = isRead
+  }
+  // 执行更新
+  const result = await AtRelation.update(updateData, {
+    where: whereData
+  })
+
+  return result[0] > 0
+}
+
+
 module.exports = {
   createAtRelation,
   getUnReadAtRelationCount,
-  getAtUserBlogList
+  getAtUserBlogList,
+  updateRelation
 }

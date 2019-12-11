@@ -10,7 +10,7 @@ const {getProfileBlogList} = require('../../controller/Profile')
 const {getFans, getFollowers} = require('../../controller/user-relation')
 const {isExist} = require('../../controller/User')
 const {getHomeBlogList} = require('../../controller/Home')
-const {getAtMeCount, getAtMeBlogList} = require('../../controller/blog-at')
+const {getAtMeCount, getAtMeBlogList, markAsRead} = require('../../controller/blog-at')
 router.get('/', loginRedirect, async ctx => {
   // 已登录用户的信息
   const userInfo = ctx.session.userInfo
@@ -157,7 +157,7 @@ router.get('/at-me', async ctx => {
   })
   // 页面加载完成之后再标记为已读
   if (atCount > 0) {
-
+    await markAsRead(myUserInfo.id)
   }
 })
 module.exports = router

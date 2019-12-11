@@ -2,8 +2,8 @@
  * @description 微博at controller
  * @author ainuo5213
  */
-const {getUnReadAtRelationCount, getAtUserBlogList} = require('../service/at-relation')
-const {SuccessModel} = require('../response/resultModel')
+const {getUnReadAtRelationCount, getAtUserBlogList, updateRelation} = require('../service/at-relation')
+const {SuccessModel, ErrorModel} = require('../response/resultModel')
 const {PAGE_SIZE} = require('../config/constants')
 class BlogAt {
   /**
@@ -36,6 +36,22 @@ class BlogAt {
       pageIndex
     })
   }
+
+  /**
+   * 标记为已读
+   * @param userId
+   * @return {Promise<void>}
+   */
+  async markAsRead(userId) {
+    // service
+    try {
+      await updateRelation({newIsRead: true}, {userId, isRead: false})
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
+
 }
 
 
