@@ -2,8 +2,9 @@
  * @description 微博at controller
  * @author ainuo5213
  */
-const {getUnReadAtRelationCount} = require('../service/at-relation')
+const {getUnReadAtRelationCount, getAtUserBlogList} = require('../service/at-relation')
 const {SuccessModel} = require('../response/resultModel')
+const {PAGE_SIZE} = require('../config/constants')
 class BlogAt {
   /**
    * 获取 @我的微博数量
@@ -15,6 +16,24 @@ class BlogAt {
     const count = await getUnReadAtRelationCount(userId)
     return new SuccessModel({
       count
+    })
+  }
+
+  /**
+   * 获取at我的微博列表
+   * @param userId 我的id
+   * @param pageIndex 页数
+   * @return {Promise<void>}
+   */
+  async getAtMeBlogList(userId, pageIndex = 0) {
+    // service
+    const {count, blogList} = await getAtUserBlogList({userId, pageIndex, pageSize: PAGE_SIZE})
+    return new SuccessModel({
+      isEmpty: blogList.length === 0,
+      blogList,
+      pageSize: PAGE_SIZE,
+      count,
+      pageIndex
     })
   }
 }

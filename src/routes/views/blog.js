@@ -10,7 +10,7 @@ const {getProfileBlogList} = require('../../controller/Profile')
 const {getFans, getFollowers} = require('../../controller/user-relation')
 const {isExist} = require('../../controller/User')
 const {getHomeBlogList} = require('../../controller/Home')
-const {getAtMeCount} = require('../../controller/blog-at')
+const {getAtMeCount, getAtMeBlogList} = require('../../controller/blog-at')
 router.get('/', loginRedirect, async ctx => {
   // 已登录用户的信息
   const userInfo = ctx.session.userInfo
@@ -133,6 +133,31 @@ router.get('/square', loginRedirect, async ctx => {
       count
     }
   })
+})
 
+router.get('/at-me', async ctx => {
+  const myUserInfo = ctx.session.userInfo
+  // 获取@数量
+  const atCountRes = await getAtMeCount(myUserInfo.id)
+  const {count: atCount} = atCountRes.data
+
+  // 获取第一页数据
+  // controller
+  const atMeBlogList = await getAtMeBlogList(myUserInfo.id)
+  const {count, isEmpty, blogList, pageSize, pageIndex} = atMeBlogList.data
+  await ctx.render('atMe', {
+    atCount,
+    blogData: {
+      isEmpty,
+      count,
+      blogList,
+      pageSize,
+      pageIndex
+    }
+  })
+  // 页面加载完成之后再标记为已读
+  if (atCount > 0) {
+
+  }
 })
 module.exports = router
