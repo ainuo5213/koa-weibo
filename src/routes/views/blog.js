@@ -135,7 +135,7 @@ router.get('/square', loginRedirect, async ctx => {
   })
 })
 
-router.get('/at-me', async ctx => {
+router.get('/at-me', loginRedirect, async ctx => {
   const myUserInfo = ctx.session.userInfo
   // 获取@数量
   const atCountRes = await getAtMeCount(myUserInfo.id)
